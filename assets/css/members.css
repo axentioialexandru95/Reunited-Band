@@ -1,0 +1,178 @@
+/* 
+If @offset is a percentage, we need to calculate using a vw unit, otherwise the % will not be accurate for the inner `.panel__content` container.
+For a fixed width, non-percentage based container, use the same value for both.
+*/
+/*////////////////////////////////////////*/
+/* Layout */
+@import 'https://fonts.googleapis.com/css?family=Oswald';
+.panels {
+  width: 100%;
+  height: 28%;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+.panel {
+  display: inline-block;
+  height: 100%;
+  position: relative;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-transition: -webkit-transform 0.8s cubic-bezier(0.4, 0, 0.3, 1);
+  transition: -webkit-transform 0.8s cubic-bezier(0.4, 0, 0.3, 1);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.3, 1);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.3, 1), -webkit-transform 0.8s cubic-bezier(0.4, 0, 0.3, 1);
+}
+/*////////////////////////////////////////*/
+/* Image/Text Container */
+.panel__content {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: #000 center center no-repeat;
+  background-size: cover;
+  -webkit-transition: -webkit-transform 0.8s cubic-bezier(0.4, 0, 0.3, 1);
+  transition: -webkit-transform 0.8s cubic-bezier(0.4, 0, 0.3, 1);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.3, 1);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.3, 1), -webkit-transform 0.8s cubic-bezier(0.4, 0, 0.3, 1);
+}
+.panel__content:before,
+.panel__content:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 1;
+  -webkit-transition: opacity 0.8s cubic-bezier(0.4, 0, 0.3, 1);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.3, 1);
+}
+.panel__content:before {
+  background: inherit;
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+}
+.panel__content:after {
+  background: #000;
+  opacity: 0.3;
+}
+/*////////////////////////////////////////*/
+/* Title */
+.panel__title {
+  color: #FFF;
+  position: relative;
+  z-index: 1;
+  -webkit-transition: color 0.8s cubic-bezier(0.4, 0, 0.3, 1);
+  transition: color 0.8s cubic-bezier(0.4, 0, 0.3, 1);
+  width: 100%;
+  text-align: center;
+  padding: 1em;
+}
+/*////////////////////////////////////////*/
+/* Alignment */
+.panel {
+  overflow: hidden;
+  margin-right: -15%;
+}
+.panel__content {
+  margin-left: -15vw;
+}
+/*////////////////////////////////////////*/
+/* Hover */
+.panels {
+  pointer-events: none;
+}
+.panel__title {
+  pointer-events: auto;
+}
+/* Make the inactive panels darker */
+.panels:hover .panel__content::after {
+  opacity: 0.7;
+}
+/* Panels before the active panel */
+.panels:hover .panel {
+  -webkit-transform: translate3d(-7.5vw, 0, 0);
+          transform: translate3d(-7.5vw, 0, 0);
+}
+/* Panels after the active panel */
+.panel:hover ~ .panel {
+  -webkit-transform: translate3d(7.5vw, 0, 0);
+          transform: translate3d(7.5vw, 0, 0);
+}
+/* The active panel */
+.panels .panel:hover {
+  pointer-events: auto;
+  /* Hide the dark grayscale overlay, revealing the color photo */
+}
+.panels .panel:hover .panel__content {
+  -webkit-transform: translate3d(7.5vw, 0, 0);
+          transform: translate3d(7.5vw, 0, 0);
+}
+.panels .panel:hover .panel__content::before,
+.panels .panel:hover .panel__content::after {
+  opacity: 0;
+}
+.panels .panel:first-child:hover {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+.panels .panel:first-child:hover ~ .panel {
+  -webkit-transform: translate3d(15vw, 0, 0);
+          transform: translate3d(15vw, 0, 0);
+}
+.panels .panel:first-child:hover .panel__content {
+  -webkit-transform: translate3d(7.5vw, 0, 0);
+          transform: translate3d(7.5vw, 0, 0);
+}
+.panels .panel:last-child:hover .panel__content {
+  -webkit-transform: translate3d(3.75vw, 0, 0);
+          transform: translate3d(3.75vw, 0, 0);
+}
+/*////////////////////////////////////////*/
+/* Specific Design Setup */
+.panel__title {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-size: 2.5em;
+  letter-spacing: 0.1em;
+}
+@media (max-width: 800px) {
+  .panel__title {
+    font-size: 1.5em;
+  }
+}
+@media (max-width: 600px) {
+  .panel__title {
+    font-size: 1.25em;
+  }
+}
